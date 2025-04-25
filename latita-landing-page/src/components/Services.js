@@ -1,4 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+const ReadMoreButton = ({ onClick }) => (
+  <button className="read-more-btn" onClick={onClick}>
+    Read More
+  </button>
+);
 
 const services = [
   {
@@ -36,36 +42,66 @@ const services = [
   }
 ];
 
-const Services = () => (
-  <section className="services">
-    <h2 className="services-title">Forensic Tax Services</h2>
+const Services = () => {
+  const [visibleCount, setVisibleCount] = useState(6);
+  const [searchTerm, setSearchTerm] = useState("");
 
-    <div className="service-grid">
-      {services.map(service => (
-        <div className="service-card" key={service.id}>
-          <h4 className={`service-heading ${service.isRed ? 'highlight' : ''}`}>
-            {`${service.id}. ${service.title}`}
-          </h4>
-          <p className="service-description">{service.description}</p>
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 6);
+  };
+
+  const filteredServices = services.filter(service =>
+    service.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <section className="services">
+      <h2 className="services-title">Forensic Tax Services</h2>
+
+      <div className="navbar-search" style={{ marginBottom: '30px' }}>
+        <input
+          type="text"
+          placeholder="Search services..."
+          className="search-input"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
+      <div className="service-grid">
+        {filteredServices.slice(0, visibleCount).map(service => (
+          <div className="service-card" key={service.id}>
+            <h4 className={`service-heading ${service.isRed ? 'highlight' : ''}`}>
+              {`${service.id}. ${service.title}`}
+            </h4>
+            <p className="service-description">{service.description}</p>
+            <ReadMoreButton onClick={() => alert(`More info about ${service.title}`)} />
+          </div>
+        ))}
+      </div>
+
+      {visibleCount < filteredServices.length && (
+        <button className="load-more-btn" onClick={handleLoadMore}>
+          Load More
+        </button>
+      )}
+
+      <div className="contact-section">
+        <div className="contact-left">
+          <h3>Contact Us Today</h3>
+          <p>to schedule a consultation and let us make your life a bit more easier.</p>
+          <button className="contact-button">Contact Us</button>
         </div>
-      ))}
-    </div>
-
-    <div className="contact-section">
-      <div className="contact-left">
-        <h3>Contact Us Today</h3>
-        <p>to schedule a consultation and let us make your life a bit more easier.</p>
-        <button className="contact-button">Contact Us</button>
+        <div className="contact-right">
+          <p className="mission-highlight">
+            Ensuring your organisation<br />
+            maintains Integrity and<br />
+            transparency in all financial matters.
+          </p>
+        </div>
       </div>
-      <div className="contact-right">
-        <p className="mission-highlight">
-          Ensuring your organisation<br />
-          maintains Integrity and<br />
-          transparency in all financial matters.
-        </p>
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Services;

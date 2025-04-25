@@ -1,8 +1,7 @@
 import React from 'react';
 import { MapPin, Phone, Mail, Facebook, Linkedin, Instagram } from 'lucide-react';
-import Logo from '../Logo/Logo'; // Make sure this file exists
+import Logo from '../Logo/Logo'; 
 
-// Contact Item
 const ContactItem = ({ icon, title, detail }) => (
   <div className="contact-item">
     <div className="contact-icon-container">{icon}</div>
@@ -13,7 +12,7 @@ const ContactItem = ({ icon, title, detail }) => (
   </div>
 );
 
-// Footer Link Section
+
 const FooterLinkSection = ({ title, links, isFirst }) => (
   <div className="footer-link-section">
     {isFirst && title && <h3 className="footer-section-title">{title}</h3>}
@@ -29,7 +28,7 @@ const FooterLinkSection = ({ title, links, isFirst }) => (
   </div>
 );
 
-// Social Links
+
 const SocialLinks = () => (
   <div className="social-links">
     <a
